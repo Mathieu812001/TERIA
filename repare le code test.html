@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion et Inscription</title>
+    <style>
+        /* Styles pour le bouton de menu */
+        #menu-button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px; /* Ajout d'une marge pour un espacement */
+            font-size: 16px; /* Agrandir le texte pour le rendre plus visible */
+        }
+
+        /* Styles pour la barre latérale */
+        #sidebar {
+            width: 250px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            display: none; /* Masquer la barre latérale par défaut */
+            position: absolute; /* Positionner la barre latérale */
+            left: 0; /* Aligner à gauche */
+            top: 50px; /* Décalage vers le bas */
+            z-index: 1000; /* S'assurer qu'elle est au-dessus des autres éléments */
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<button id="menu-button">
+    <span id="menu-label">Menu</span>
+</button>
+
+<div id="sidebar">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+    </div>
+
+    <!-- Informations Créateur -->
+    <button id="info-button">Informations</button>
+    <div id="creator-info" style="display: none;">
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+
+    <!-- Connexion -->
+    <div id="login-container" style="margin-top: 20px;">
+        <input type="email" id="email-login" placeholder="Login (email)" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="password" id="password-login" placeholder="Mot de passe" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <label>
+            <input type="checkbox" id="remember-me" /> Enregistrer le mot de passe
+        </label>
+        <button id="login-button" style="margin-top: 10px; padding: 5px 10px;">Se connecter</button>
+    </div>
+
+    <!-- Inscription -->
+    <button id="signup-button" style="margin-top: 20px; padding: 5px 10px;">Inscription</button>
+    <div id="signup-container" style="margin-top: 20px;">
+        <input type="text" id="first-name" placeholder="Prénom" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="text" id="last-name" placeholder="Nom" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="email" id="email-signup" placeholder="Adresse e-mail" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <button id="submit-signup" style="margin-top: 10px; padding: 5px 10px;">S'inscrire</button>
+    </div>
+</div>
+
+<script>
+// Ouvrir/fermer la barre latérale
+document.getElementById('menu-button').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none'; // Alterne l'affichage de la barre latérale
+});
+
+// Ouvrir/fermer le formulaire d'inscription
+document.getElementById('signup-button').addEventListener('click', function() {
+    const signupContainer = document.getElementById('signup-container');
+    signupContainer.style.display = signupContainer.style.display === 'none' ? 'block' : 'none';
+});
+
+// Enregistrement des informations de connexion
+document.getElementById('login-button').addEventListener('click', function() {
+    const email = document.getElementById('email-login').value;
+    const password = document.getElementById('password-login').value;
+    const rememberMe = document.getElementById('remember-me').checked;
+
+    if (rememberMe) {
+        // Stocker les identifiants dans le stockage local
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+    }
+
+    alert("Vous êtes maintenant connecté !");
+    // Redirection ou autre logique de connexion ici
+});
+
+// Remplir automatiquement les champs si les données sont enregistrées
+window.onload = function() {
+    const savedEmail = localStorage.getItem('email');
+    const savedPassword = localStorage.getItem('password');
+
+    if (savedEmail && savedPassword) {
+        document.getElementById('email-login').value = savedEmail;
+        document.getElementById('password-login').value = savedPassword;
+    }
+};
+
+// Gestion de l'inscription
+document.getElementById('submit-signup').addEventListener('click', function() {
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const emailSignup = document.getElementById('email-signup').value;
+
+    if (firstName && lastName && emailSignup) {
+        // Sauvegarder les données d'inscription ou traiter l'inscription ici
+        alert(`Bienvenue ${firstName} ${lastName}, votre compte avec l'email ${emailSignup} est créé !`);
+        // Masquer le formulaire d'inscription après validation
+        document.getElementById('signup-container').style.display = 'none';
+    } else {
+        alert("Veuillez remplir tous les champs.");
+    }
+});
+</script>
+
+</body>
+</html>

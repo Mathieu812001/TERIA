@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Connexion et Inscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #sidebar {
+            width: 300px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
+        /* Style pour le formulaire d'inscription */
+        #signup-container {
+            display: none; /* Masqué par défaut */
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+    </div>
+    <button id="info-button">Informations</button>
+    <div id="creator-info" style="display: none;">
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+    <div id="login-container" style="margin-top: 20px;">
+        <input type="email" id="username" placeholder="Adresse e-mail" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="password" id="password" placeholder="Mot de passe" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <label>
+            <input type="checkbox" id="remember-me" /> Enregistrer le mot de passe
+        </label>
+        <button id="login-button" style="margin-top: 10px; padding: 5px 10px;">Se connecter</button>
+    </div>
+    <button id="signup-button" style="margin-top: 20px; padding: 5px 10px;">Inscription</button>
+
+    <!-- Formulaire d'inscription -->
+    <div id="signup-container" style="margin-top: 20px;">
+        <input type="text" id="first-name" placeholder="Prénom" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="text" id="last-name" placeholder="Nom" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="email" id="email" placeholder="Adresse e-mail" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <input type="password" id="signup-password" placeholder="Mot de passe" style="margin-bottom: 10px; padding: 5px; width: 80%;" />
+        <button id="submit-signup" style="margin-top: 10px; padding: 5px 10px;">S'inscrire</button>
+    </div>
+</div>
+
+<script>
+    // Afficher ou cacher les informations
+    document.getElementById('info-button').addEventListener('click', function() {
+        const creatorInfo = document.getElementById('creator-info');
+        creatorInfo.style.display = creatorInfo.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Gérer la connexion
+    document.getElementById('login-button').addEventListener('click', function() {
+        const username = document.getElementById('username').value; // Email
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('remember-me').checked;
+
+        // Récupérer les informations d'identification enregistrées
+        const savedUsername = localStorage.getItem('email');
+        const savedPassword = localStorage.getItem('password');
+
+        if (username === savedUsername && password === savedPassword) {
+            alert('Connexion réussie !');
+        } else {
+            alert('Adresse e-mail ou mot de passe incorrect.');
+        }
+
+        // Gérer l'enregistrement des identifiants
+        if (rememberMe) {
+            localStorage.setItem('email', username);
+            localStorage.setItem('password', password);
+        } else {
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
+        }
+    });
+
+    // Ouvrir le formulaire d'inscription
+    document.getElementById('signup-button').addEventListener('click', function() {
+        const signupContainer = document.getElementById('signup-container');
+        signupContainer.style.display = signupContainer.style.display === 'none' ? 'block' : 'none'; // Toggle visibility
+    });
+
+    // Gérer la soumission du formulaire d'inscription
+    document.getElementById('submit-signup').addEventListener('click', function() {
+        const firstName = document.getElementById('first-name').value;
+        const lastName = document.getElementById('last-name').value;
+        const email = document.getElementById('email').value;
+        const signupPassword = document.getElementById('signup-password').value;
+
+        if (firstName && lastName && email && signupPassword) {
+            alert('Inscription réussie !');
+            // Enregistrer l'email et le mot de passe pour la connexion
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', signupPassword);
+            document.getElementById('signup-container').style.display = 'none'; // Fermer le formulaire d'inscription
+        } else {
+            alert('Veuillez remplir tous les champs d\'inscription.');
+        }
+    });
+</script>
+
+</body>
+</html>

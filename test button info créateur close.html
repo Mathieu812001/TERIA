@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informations du Créateur</title>
+    <style>
+        #creator-info {
+            display: none; /* Masquer le texte par défaut */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="info-button">Informations</button>
+    
+    <div id="creator-info"> 
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+
+    <script>
+        const infoButton = document.getElementById('info-button');
+        const creatorInfo = document.getElementById('creator-info');
+
+        infoButton.addEventListener('click', () => {
+            if (creatorInfo.style.display === 'none') {
+                creatorInfo.style.display = 'block'; // Afficher les informations
+            } else {
+                creatorInfo.style.display = 'none'; // Masquer les informations
+            }
+        });
+    </script>
+    
+</body>
+</html>

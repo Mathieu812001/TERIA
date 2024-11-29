@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #menu-button {
+            margin: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 10; /* Assurez-vous que le bouton est au-dessus */
+            position: relative; /* Nécessaire pour z-index */
+        }
+
+        #sidebar {
+            display: none;
+            background-color: #333;
+            padding: 20px;
+            color: white;
+            position: absolute;
+            top: 50px; /* Ajustez pour éviter de couvrir le bouton */
+            left: 0;
+            z-index: 5; /* Barre latérale en dessous du bouton */
+        }
+    </style>
+</head>
+<body>
+
+<button id="menu-button">Menu</button>
+
+<div id="sidebar">
+    <div style="margin-bottom: 20px;">
+        <strong>Informations</strong>
+    </div>
+    <div>
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+</div>
+
+<script>
+    document.getElementById("menu-button").onclick = function () {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.style.display = sidebar.style.display === "block" ? "none" : "block";
+    };
+</script>
+
+</body>
+</html>

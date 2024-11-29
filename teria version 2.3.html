@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teria</title>
+    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quitter la Page</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            position: relative;
+        }
+        .quit-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+       
+    </style>
+</head>
+<body>
+
+    <button class="quit-button" onclick="confirmQuit()">Quitter</button>
+
+    <script>
+        function confirmQuit() {
+            // Afficher le message de confirmation
+            const userConfirmed = confirm("Voulez-vous vraiment quitter la page ?");
+            if (userConfirmed) {
+                // Si l'utilisateur confirme, vous pouvez rediriger ou faire d'autres actions
+                window.location.href = 'https://www.google.com'; // Remplacez par l'URL de redirection souhaitée
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+    <head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #fff3e0; /* Fond clair */
+            color: #333; /* Texte sombre */
+            display: flex; /* Pour aligner le menu et le contenu */
+        }
+        #sidebar {
+    width: 300px; /* Augmenter la largeur de la sidebar */
+    background-color: #f57c00; /* Couleur de fond de la sidebar */
+    color: rgb(0, 0, 0); /* Texte en noir */
+    padding: 10px;
+    position: fixed; /* Fixe la sidebar à gauche */
+    height: 100%; /* Prend toute la hauteur */
+    overflow-y: auto; /* Permet le défilement si le contenu dépasse */
+    transform: translateX(-400px); /* Encastrer complètement la sidebar hors de l'écran avec un décalage supplémentaire de 2 cm */
+    transition: transform 0.3s ease; /* Transition fluide pour l'ouverture */
+    border: 2px solid rgb(0, 0, 0); /* Bordure noire autour de la sidebar */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
+}
+
+        #sidebar.open {
+            transform: translateX(0); /* Afficher la sidebar */
+        }
+      
+  
+        #menu-button {
+            cursor: pointer; /* Curseur en main */
+            background-color: #f57c00; /* Couleur de fond */
+            color: white; /* Texte en blanc */
+            border: none; /* Pas de bordure */
+            padding: 10px; /* Espacement interne */
+            position: fixed; /* Fixe le bouton en haut à gauche */
+            z-index: 1000; /* S'assurer que le bouton soit au-dessus */
+            display: flex; /* Alignement pour le texte et le carré */
+            align-items: center; /* Centrer verticalement */
+            left: 0; /* Position initiale */
+            transition: left 0.3s ease; /* Transition pour le déplacement */
+            
+        }
+        
+        #bouton.decale {
+            transform: translateX(100px); /* Décalage de 100px vers la droite */
+        }
+
+
+        #menu-button div {
+            height: 3px; /* Épaisseur des traits */
+            background: rgb(255, 255, 255); /* Couleur des traits */
+            margin: 4px; /* Espace entre les traits */
+        }
+        #menu-label {
+            margin-left: 10px; /* Espacement à gauche du texte */
+            color: rgb(255, 253, 253); /* Texte en blanc */
+            font-weight: bold; /* Mettre le texte en gras */
+            font-size: 18px; /* Augmenter la taille du texte du menu */
+        }
+        #content {
+            margin-left: 20px; /* Espace pour le bouton de menu */
+            padding: 20px; /* Espacement interne */
+            flex: 1; /* Prendre l'espace restant */
+        }
+        h1 {
+            color: #f57c00; /* Couleur du titre (orange plus foncé) */
+            text-align: center;
+        }
+        #logo {
+            display: block; /* Afficher le logo en tant que bloc */
+            margin: 0 auto 20px; /* Centrer le logo avec des marges */
+            max-width: 200px; /* Limite la largeur du logo */
+        }
+        #chatbox {
+            border: 1px solid #f57c00; /* Bordure orange plus foncé */
+            background-color: #fff; /* Fond blanc pour le chat */
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        #input-container {
+            display: flex;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange plus foncé */
+            border-radius: 5px; /* Coins arrondis */
+        }
+        button {
+            padding: 10px;
+            background-color: #f57c00; /* Bouton orange plus foncé */
+            color: white; /* Texte blanc */
+            border: none; /* Pas de bordure */
+            border-radius: 5px; /* Coins arrondis */
+            cursor: pointer; /* Curseur en main */
+        }
+        button:hover {
+            background-color: #ef6c00; /* Couleur légèrement plus foncée au survol */
+        }
+        .more-info {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px;
+            background-color: #ffe0b2; /* Couleur d'arrière-plan pour la section d'informations supplémentaires */
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange */
+            border-radius: 5px; /* Coins arrondis */
+        }
+        #creator-info {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px;
+            background-color: #ffe0b2; /* Couleur d'arrière-plan pour la section d'informations supplémentaires */
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange */
+            border-radius: 5px; /* Coins arrondis */
+            color: black; /* Texte en noir */
+        }
+        #info-button {
+            background-color: #f57c00; /* Couleur du bouton */
+            color: white; /* Texte en blanc */
+            border: 2px solid black; /* Bordure noire */
+            padding: 10px; /* Espacement interne */
+            width: 100%; /* Prend toute la largeur */
+            cursor: pointer; /* Curseur en main */
+            margin-bottom: 10px; /* Espace en bas du bouton */
+            font-size: 20px; /* Augmenter la taille du texte du bouton */
+        }
+        #see-more, #see-more-commands {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px; /* Espace entre les boutons */
+        }
+    </style>
+</head>
+<body>
+
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teria</title>
+    </head>
+    <body>
+        
+        <!-- Inclure le fichier PHP qui se connecte à la base Access -->
+        <?php include 'connexion_access.php'; ?>
+    
+    </body>
+    </html>
+    
+
+    <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Connexion et d'Inscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #sidebar {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ff5e00a9;
+            border-radius: 5px;
+            background-color: #ffd09b;
+            color: black;
+        }
+        button {
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #ff9100;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #ff7300;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ff7300;
+            border-radius: 5px;
+        }
+        h3 {
+            margin: 0 0 10px;
+        }
+        #welcome-message {
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: green; /* Couleur pour le message de bienvenue */
+        }
+        #user-list {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Inclure jQuery pour faciliter AJAX -->
+</head>
+<body>
+
+<button id="menu-button">
+    <span id="menu-label">Menu</span>
+</button>
+
+<div id="sidebar">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+        <div style="height: 3px; background: rgb(255, 123, 0); margin: 4px;"></div>
+        <div style="height: 3px; background: rgb(255, 123, 0); margin: 4px;"></div>
+        <div style="height: 3px; background: rgb(255, 123, 0);"></div>
+    </div>
+
+    <button id="info-button">Informations</button>
+
+    <div id="creator-info"> 
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+    
+    <button id="login-button">Connexion</button> 
+    <button id="signup-button">Inscription</button> 
+    <button id="logout-button" style="display: none;">Déconnexion</button>
+    
+    <p id="welcome-message" style="display: none;"></p> <!-- Message de bienvenue -->
+
+    <!-- Formulaire d'inscription -->
+    <form id="signup-form" action="javascript:void(0);">
+        <h3>Inscription</h3>
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="mot_de_passe">Mot de passe :</label>
+        <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+        
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required>
+        
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required>
+        
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <!-- Formulaire de connexion -->
+    <form id="login-form" action="javascript:void(0);" style="display: none;">
+        <h3>Connexion</h3>
+        <label for="login-email">Email :</label>
+        <input type="email" id="login-email" name="login-email" required>
+        
+        <label for="login-password">Mot de passe :</label>
+        <input type="password" id="login-password" name="login-password" required>
+        
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <!-- Zone pour afficher les messages d'erreur ou de succès -->
+    <div id="message"></div>
+
+    <!-- Zone pour afficher la liste des utilisateurs -->
+    <div id="user-list" style="display: none;"></div>
+</div>
+
+<script>
+    // Afficher ou cacher les formulaires
+    $('#signup-button').click(function() {
+        $('#signup-form').toggle();
+        $('#login-form').hide();
+        $('#message').hide();
+    });
+
+    $('#login-button').click(function() {
+        $('#login-form').toggle();
+        $('#signup-form').hide();
+        $('#message').hide();
+    });
+
+    // Utilisation d'AJAX pour envoyer les données du formulaire d'inscription
+    $('#signup-form').submit(function() {
+        // Récupérer les données du formulaire
+        var email = $('#email').val();
+        var mot_de_passe = $('#mot_de_passe').val();
+        var nom = $('#nom').val();
+        var prenom = $('#prenom').val();
+
+        // Effectuer une requête AJAX vers le script PHP
+        $.ajax({
+            url: 'enregistrer_utilisateur.php', // Le fichier PHP qui gère l'enregistrement
+            type: 'POST',
+            data: {
+                email: email,
+                mot_de_passe: mot_de_passe,
+                nom: nom,
+                prenom: prenom
+            },
+            success: function(response) {
+                $('#message').html(response); // Afficher le message du script PHP (succès ou erreur)
+                $('#signup-form')[0].reset(); // Réinitialiser le formulaire
+                afficherUtilisateurs(); // Rafraîchir la liste des utilisateurs
+            },
+            error: function() {
+                $('#message').html('Erreur lors de la soumission du formulaire.');
+            }
+        });
+    });
+
+    // Utilisation d'AJAX pour envoyer les données du formulaire de connexion
+    $('#login-form').submit(function() {
+        // Récupérer les données du formulaire
+        var email = $('#login-email').val();
+        var mot_de_passe = $('#login-password').val();
+
+        // Effectuer une requête AJAX vers le script PHP
+        $.ajax({
+            url: 'connexion.php', // Le fichier PHP qui gère la connexion
+            type: 'POST',
+            data: {
+                email: email,
+                mot_de_passe: mot_de_passe
+            },
+            success: function(response) {
+                $('#message').html(response); // Afficher le message du script PHP
+                $('#welcome-message').html('Bienvenue, ' + nom + '!').show(); // Afficher le message de bienvenue
+                $('#logout-button').show(); // Afficher le bouton de déconnexion
+                $('#login-form').hide(); // Cacher le formulaire de connexion
+                $('#signup-form').hide(); // Cacher le formulaire d'inscription
+                afficherUtilisateurs(); // Rafraîchir la liste des utilisateurs
+            },
+            error: function() {
+                $('#message').html('Erreur lors de la connexion.');
+            }
+        });
+    });
+
+    // Fonction pour afficher la liste des utilisateurs
+    function afficherUtilisateurs() {
+        $.ajax({
+            url: 'afficher_utilisateurs.php', // Le fichier PHP qui affiche les utilisateurs
+            type: 'GET',
+            success: function(data) {
+                $('#user-list').html(data).show(); // Afficher la liste des utilisateurs
+            },
+            error: function() {
+                $('#user-list').html('Erreur lors de la récupération des utilisateurs.');
+            }
+        });
+    }
+
+    // Déconnexion
+    $('#logout-button').click(function() {
+        $.ajax({
+            url: 'deconnexion.php', // Le fichier PHP qui gère la déconnexion
+            type: 'POST',
+            success: function() {
+                $('#welcome-message').hide(); // Cacher le message de bienvenue
+                $('#logout-button').hide(); // Cacher le bouton de déconnexion
+                $('#message').html('Vous êtes déconnecté.'); // Message de déconnexion
+                $('#user-list').hide(); // Cacher la liste des utilisateurs
+            },
+            error: function() {
+                $('#message').html('Erreur lors de la déconnexion.');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+         
+    
+<div id="content">
+    <h1>Assistant de Recherche de Commandes</h1>
+    <img id="logo" src="https://logo-marque.com/wp-content/uploads/2021/09/Orange-S.A.-Logo.png" alt="Logo Orange">
+
+    <label for="device">Choisissez le dispositif :</label>
+    <select id="device">
+        <option value="cisco">Cisco</option>
+        <option value="juniper">Juniper</option>
+    </select>
+
+    <div id="chatbox"></div>
+
+    <div id="input-container">
+        <input type="text" id="question" placeholder="Posez votre question ici...">
+        <button id="submit">
+            <img src="https://logo-marque.com/wp-content/uploads/2021/09/Orange-S.A.-Logo.png" alt="Logo Orange" style="height: 20px; vertical-align: middle;"> 
+            Envoyer
+        </button>
+    </div>
+
+    <button id="see-more" style="display: none;">Voir plus</button>
+    <div class="more-info"></div> <!-- Div pour les informations supplémentaires -->
+    <button id="see-more-commands">Voir les commandes critiques</button> <!-- Nouveau bouton pour les commandes critiques -->
+    <div class="critical-commands" style="display: none;"></div> <!-- Div pour les commandes critiques -->
+</div>
+
+<script>
+    const commands = {
+        "remise à zéro": {
+            "cisco": "La commande pour la remise à zéro est 'dir flash'.",
+            "juniper": "La commande pour la remise à zéro est 'clear configuration'."
+        },
+        "configurer le port": {
+            "cisco": "Pour configurer le port, utilisez 'set port'.",
+            "juniper": "Pour configurer le port, utilisez 'set interfaces [interface] unit 0 family inet address [adresse]'."
+        },
+        "ouvrir un fichier": {
+            "cisco": "Pour ouvrir un fichier, utilisez 'copy tftp flash'.",
+            "juniper": "Pour ouvrir un fichier, utilisez 'file show'."
+        },
+        "fermer la session": {
+            "cisco": "Pour fermer la session, utilisez 'exit'.",
+            "juniper": "Pour fermer la session, utilisez 'exit'."
+        },
+        "envoyer un fichier": {
+            "cisco": "Pour envoyer un fichier, utilisez 'copy flash tftp'.",
+            "juniper": "Pour envoyer un fichier, utilisez 'copy file scp'."
+        },
+        "mettre à jour le firmware": {
+            "cisco": "Pour mettre à jour le firmware, utilisez 'upgrade firmware'.",
+            "juniper": "Pour mettre à jour le firmware, utilisez 'request system software add [image]'."
+        },
+        "se connecter à un hôte": {
+            "cisco": "Utilisez 'telnet [adresse_ip]' pour vous connecter à un hôte.",
+            "juniper": "Utilisez 'ssh [utilisateur]@[adresse_ip]' pour vous connecter à un hôte."
+        },
+        "changer le terminal": {
+            "cisco": "Pour changer de type de terminal, utilisez 'terminal type [type]'.",
+            "juniper": "Utilisez 'set terminal [type]' pour changer le type de terminal."
+        },
+        "définir le délai": {
+            "cisco": "Utilisez 'timeout [secondes]' pour définir le délai.",
+            "juniper": "Utilisez 'set timeout [secondes]' pour définir le délai."
+        }
+    };
+
+    const reponses = {
+        "C'est quoi la commande pour remettre à zéro ?": "remise à zéro",
+        "Quelle est la commande pour configurer le port ?": "configurer le port",
+        "Comment ouvrir un fichier ?": "ouvrir un fichier",
+        "Comment fermer la session ?": "fermer la session",
+        "Comment envoyer un fichier ?": "envoyer un fichier",
+        "Comment se connecter à un hôte ?": "se connecter à un hôte",
+        "Comment changer le terminal ?": "changer le terminal",
+        "Comment définir le délai ?": "définir le délai",
+    };
+
+    function sendMessage() {
+        const device = document.getElementById('device').value;
+        const question = document.getElementById('question').value.trim();
+        document.getElementById('question').value = ''; // Réinitialiser le champ de saisie
+        const chatbox = document.getElementById('chatbox');
+        
+        // Réinitialiser les boutons "Voir plus"
+        document.getElementById('see-more').style.display = 'none';
+        document.getElementById('see-more-commands').style.display = 'none'; // Masquer le bouton des commandes critiques
+
+        if (question === '?') {
+            const questions = Object.keys(reponses).map(q => 
+                `<li><a href="#" class="question-link" data-question="${q}">${q}</a></li>`
+            ).join('');
+            chatbox.innerHTML += `<div><strong>Assistant:</strong> Voici les questions possibles : <ul>${questions}</ul></div>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+            return;
+        }
+
+        const commandKey = reponses[question];
+        let response;
+
+        if (commandKey) {
+            response = commands[commandKey][device];
+            if (commandKey === "remise à zéro" && device === "cisco") {
+                document.getElementById('see-more').style.display = 'inline'; // Afficher le bouton "Voir plus"
+            }
+        } else {
+            response = "Désolé, je n'ai pas trouvé de commande correspondant à votre question.";
+        }
+
+        chatbox.innerHTML += `<div><strong>Vous:</strong> ${question}</div>`;
+        chatbox.innerHTML += `<div><strong>Assistant:</strong> ${response}</div>`;
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    }
+
+    // Afficher la présentation de Téria
+    document.getElementById('chatbox').innerHTML += `<div><strong>Assistant:</strong> Bonjour, je suis Téria. Posez vos questions ou tapez "?" pour les options.</div>`;
+
+    document.getElementById('submit').addEventListener('click', sendMessage);
+
+    // Ajout de l'écouteur pour la touche "Entrée"
+    document.getElementById('question').addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Écouter les clics sur les liens de questions
+    document.addEventListener('click', (event) => {
+        if (event.target.classList.contains('question-link')) {
+            event.preventDefault();
+            const question = event.target.getAttribute('data-question');
+            document.getElementById('question').value = question; // Remplir le champ de saisie avec la question cliquée
+            sendMessage(); // Appeler la fonction sendMessage
+        }
+    });
+
+    // Ajouter l'écouteur d'événements pour le bouton "Voir plus"
+    document.getElementById('see-more').onclick = () => {
+        const moreInfo = `
+            delete vlan.dat<br>
+            delete private-config.text<br>
+            delete config.text.backup<br>
+            delete private-config.text.backup<br>
+            delete config.text;
+        `;
+        document.querySelector('.more-info').innerHTML = moreInfo; // Mettre à jour le contenu
+        document.querySelector('.more-info').style.display = 'block'; // Afficher les informations supplémentaires
+        document.getElementById('see-more').style.display = 'none'; // Masquer le bouton après clic
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    };
+
+    // Ajouter l'écouteur d'événements pour le bouton "Voir les commandes critiques"
+    document.getElementById('see-more-commands').onclick = () => {
+        const criticalCommands = `
+            write erase<br>
+            reload;
+        `;
+        document.querySelector('.critical-commands').innerHTML = criticalCommands; // Mettre à jour le contenu des commandes critiques
+        document.querySelector('.critical-commands').style.display = 'block'; // Afficher les commandes critiques
+        document.getElementById('see-more-commands').style.display = 'none'; // Masquer le bouton après clic
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    };
+
+    // Gestion de l'ouverture et de la fermeture du menu
+    const menuButton = document.getElementById('menu-button');
+    const sidebar = document.getElementById('sidebar');
+
+    menuButton.onclick = () => {
+        sidebar.classList.toggle('open'); // Basculer l'état ouvert/fermé de la sidebar
+        const creatorInfo = document.getElementById('creator-info');
+        creatorInfo.style.display = sidebar.classList.contains('open') ? 'block' : 'none'; // Afficher ou masquer les infos
+    };
+
+    // Ajouter l'écouteur d'événements pour le bouton "Informations"
+    document.getElementById('info-button').onclick = () => {
+        const creatorInfo = document.getElementById('creator-info');
+        creatorInfo.style.display = creatorInfo.style.display === 'none' ? 'block' : 'none'; // Afficher ou masquer les infos
+    };
+
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', (event) => {
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (!menuButton.contains(event.target) && !sidebar.contains(event.target)) {
+            sidebar.classList.remove('open'); // Fermer le menu
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant de Commandes Réseau</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #fff3e0; /* Fond clair */
+            color: #333; /* Texte sombre */
+            display: flex; /* Pour aligner le menu et le contenu */
+        }
+        #sidebar {
+            width: 300px; /* Augmenter la largeur de la sidebar */
+            background-color: #f57c00; /* Couleur de fond de la sidebar */
+            color: rgb(0, 0, 0); /* Texte en blanc */
+            padding: 10px;
+            position: fixed; /* Fixe la sidebar à gauche */
+            height: 100%; /* Prend toute la hauteur */
+            overflow-y: auto; /* Permet le défilement si le contenu dépasse */
+            transform: translateX(-100%); /* Masquer la sidebar par défaut */
+            transition: transform 0.3s ease; /* Transition fluide pour l'ouverture */
+            border: 2px solid rgb(0, 0, 0); /* Bordure noire autour de la sidebar */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
+        }
+        #sidebar.open {
+            transform: translateX(0); /* Afficher la sidebar */
+        }
+        #menu-button {
+            cursor: pointer; /* Curseur en main */
+            background-color: #f57c00; /* Couleur de fond */
+            color: white; /* Texte en blanc */
+            border: none; /* Pas de bordure */
+            padding: 10px; /* Espacement interne */
+            position: fixed; /* Fixe le bouton en haut à gauche */
+            z-index: 1000; /* S'assurer que le bouton soit au-dessus */
+            display: flex; /* Alignement pour le texte et le carré */
+            align-items: center; /* Centrer verticalement */
+        }
+        #menu-button div {
+            height: 3px; /* Épaisseur des traits */
+            background: rgb(255, 255, 255); /* Couleur des traits */
+            margin: 4px; /* Espace entre les traits */
+        }
+        #menu-label {
+            margin-left: 10px; /* Espacement à gauche du texte */
+            color: rgb(255, 253, 253); /* Texte en blanc */
+            font-weight: bold; /* Mettre le texte en gras */
+            font-size: 18px; /* Augmenter la taille du texte du menu */
+        }
+        #content {
+            margin-left: 20px; /* Espace pour le bouton de menu */
+            padding: 20px; /* Espacement interne */
+            flex: 1; /* Prendre l'espace restant */
+        }
+        h1 {
+            color: #f57c00; /* Couleur du titre (orange plus foncé) */
+            text-align: center;
+        }
+        #logo {
+            display: block; /* Afficher le logo en tant que bloc */
+            margin: 0 auto 20px; /* Centrer le logo avec des marges */
+            max-width: 200px; /* Limite la largeur du logo */
+        }
+        #chatbox {
+            border: 1px solid #f57c00; /* Bordure orange plus foncé */
+            background-color: #fff; /* Fond blanc pour le chat */
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        #input-container {
+            display: flex;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange plus foncé */
+            border-radius: 5px; /* Coins arrondis */
+        }
+        button {
+            padding: 10px;
+            background-color: #f57c00; /* Bouton orange plus foncé */
+            color: white; /* Texte blanc */
+            border: none; /* Pas de bordure */
+            border-radius: 5px; /* Coins arrondis */
+            cursor: pointer; /* Curseur en main */
+        }
+        button:hover {
+            background-color: #ef6c00; /* Couleur légèrement plus foncée au survol */
+        }
+        .more-info {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px;
+            background-color: #ffe0b2; /* Couleur d'arrière-plan pour la section d'informations supplémentaires */
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange */
+            border-radius: 5px; /* Coins arrondis */
+        }
+        #creator-info {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px;
+            background-color: #ffe0b2; /* Couleur d'arrière-plan pour la section d'informations supplémentaires */
+            padding: 10px;
+            border: 1px solid #f57c00; /* Bordure orange */
+            border-radius: 5px; /* Coins arrondis */
+            color: black; /* Texte en noir */
+        }
+        #info-button {
+            background-color: #f57c00; /* Couleur du bouton */
+            color: white; /* Texte en blanc */
+            border: 2px solid black; /* Bordure noire */
+            padding: 10px; /* Espacement interne */
+            width: 100%; /* Prend toute la largeur */
+            cursor: pointer; /* Curseur en main */
+            margin-bottom: 10px; /* Espace en bas du bouton */
+            font-size: 20px; /* Augmenter la taille du texte du bouton */
+        }
+        #see-more, #see-more-commands {
+            display: none; /* Masquer par défaut */
+            margin-top: 10px; /* Espace entre les boutons */
+        }
+    </style>
+</head>
+<body>
+
+<button id="menu-button">
+    <div></div>
+    <div></div>
+    <div></div>
+    <span id="menu-label">Menu</span> <!-- Ajout du texte Menu -->
+</button>
+
+<div id="sidebar">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+        <div style="height: 3px; background: white; margin: 4px;"></div>
+    </div>
+    <button id="info-button">Informations</button> <!-- Bouton pour afficher les informations -->
+    <div id="creator-info"> <!-- Masqué par défaut -->
+        <strong>Créateur:</strong> Mathieu Sauvage<br>
+        <strong>Téléphone:</strong> 0672189153<br>
+        <strong>Date de création:</strong> 04/10/2024
+    </div>
+</div>
+
+<div id="content">
+    <h1>Assistant de Recherche de Commandes</h1>
+    <img id="logo" src="https://logo-marque.com/wp-content/uploads/2021/09/Orange-S.A.-Logo.png" alt="Logo Orange">
+
+    <label for="device">Choisissez le dispositif :</label>
+    <select id="device">
+        <option value="cisco">Cisco</option>
+        <option value="juniper">Juniper</option>
+    </select>
+
+    <div id="chatbox"></div>
+
+    <div id="input-container">
+        <input type="text" id="question" placeholder="Posez votre question ici...">
+        <button id="submit">
+            <img src="https://logo-marque.com/wp-content/uploads/2021/09/Orange-S.A.-Logo.png" alt="Logo Orange" style="height: 20px; vertical-align: middle;"> 
+            Envoyer
+        </button>
+    </div>
+
+    <button id="see-more" style="display: none;">Voir plus</button>
+    <div class="more-info"></div> <!-- Div pour les informations supplémentaires -->
+    <button id="see-more-commands">Voir les commandes critiques</button> <!-- Nouveau bouton pour les commandes critiques -->
+    <div class="critical-commands" style="display: none;"></div> <!-- Div pour les commandes critiques -->
+</div>
+
+</script>
+<script>
+    const commands = {
+        "remise à zéro": {
+            "cisco": "La commande pour la remise à zéro est 'dir flash'.",
+            "juniper": "La commande pour la remise à zéro est 'clear configuration'."
+        },
+        "configurer le port": {
+            "cisco": "Pour configurer le port, utilisez 'set port'.",
+            "juniper": "Pour configurer le port, utilisez 'set interfaces [interface] unit 0 family inet address [adresse]'."
+        },
+        "ouvrir un fichier": {
+            "cisco": "Pour ouvrir un fichier, utilisez 'copy tftp flash'.",
+            "juniper": "Pour ouvrir un fichier, utilisez 'file show'."
+        },
+        "fermer la session": {
+            "cisco": "Pour fermer la session, utilisez 'exit'.",
+            "juniper": "Pour fermer la session, utilisez 'exit'."
+        },
+        "envoyer un fichier": {
+            "cisco": "Pour envoyer un fichier, utilisez 'copy flash tftp'.",
+            "juniper": "Pour envoyer un fichier, utilisez 'copy file scp'."
+        },
+        "mettre à jour le firmware": {
+            "cisco": "Pour mettre à jour le firmware, utilisez 'upgrade firmware'.",
+            "juniper": "Pour mettre à jour le firmware, utilisez 'request system software add [image]'."
+        },
+        "se connecter à un hôte": {
+            "cisco": "Utilisez 'telnet [adresse_ip]' pour vous connecter à un hôte.",
+            "juniper": "Utilisez 'ssh [utilisateur]@[adresse_ip]' pour vous connecter à un hôte."
+        },
+        "changer le terminal": {
+            "cisco": "Pour changer de type de terminal, utilisez 'terminal type [type]'.",
+            "juniper": "Utilisez 'set terminal [type]' pour changer le type de terminal."
+        },
+        "définir le délai": {
+            "cisco": "Utilisez 'timeout [secondes]' pour définir le délai.",
+            "juniper": "Utilisez 'set timeout [secondes]' pour définir le délai."
+        }
+    };
+
+    const reponses = {
+        "C'est quoi la commande pour remettre à zéro ?": "remise à zéro",
+        "Quelle est la commande pour configurer le port ?": "configurer le port",
+        "Comment ouvrir un fichier ?": "ouvrir un fichier",
+        "Comment fermer la session ?": "fermer la session",
+        "Comment envoyer un fichier ?": "envoyer un fichier",
+        "Comment se connecter à un hôte ?": "se connecter à un hôte",
+        "Comment changer le terminal ?": "changer le terminal",
+        "Comment définir le délai ?": "définir le délai",
+    };
+
+    function sendMessage() {
+        const device = document.getElementById('device').value;
+        const question = document.getElementById('question').value.trim();
+        document.getElementById('question').value = ''; // Réinitialiser le champ de saisie
+        const chatbox = document.getElementById('chatbox');
+        
+        // Réinitialiser les boutons "Voir plus"
+        document.getElementById('see-more').style.display = 'none';
+        document.getElementById('see-more-commands').style.display = 'none'; // Masquer le bouton des commandes critiques
+
+
+        if (question === '?') {
+            const questions = Object.keys(reponses).map(q => `<li>${q}</li>`).join('');
+            chatbox.innerHTML += `<div><strong>Assistant:</strong> Voici les questions possibles : <ul>${questions}</ul></div>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+            return;
+        }
+
+        const commandKey = reponses[question];
+        let response;
+
+        if (commandKey) {
+            response = commands[commandKey][device];
+            if (commandKey === "remise à zéro" && device === "cisco") {
+                document.getElementById('see-more').style.display = 'inline'; // Afficher le bouton "Voir plus"
+            }
+        } else {
+            response = "Désolé, je n'ai pas trouvé de commande correspondant à votre question.";
+        }
+
+        chatbox.innerHTML += `<div><strong>Vous:</strong> ${question}</div>`;
+        chatbox.innerHTML += `<div><strong>Assistant:</strong> ${response}</div>`;
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    }
+
+    // Afficher la présentation de Téria
+    document.getElementById('chatbox').innerHTML += `<div><strong>Assistant:</strong> Bonjour, je suis Téria. Posez vos questions ou tapez '?' pour les options.</div>`;
+
+    document.getElementById('submit').addEventListener('click', sendMessage);
+
+    
+
+    // Ajout de l'écouteur pour la touche "Entrée"
+    document.getElementById('question').addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Ajouter l'écouteur d'événements pour le bouton "Voir plus"
+    document.getElementById('see-more').onclick = () => {
+        const moreInfo = `
+            delete vlan.dat<br>
+            delete private-config.text<br>
+            delete config.text.backup<br>
+            delete private-config.text.backup<br>
+            delete config.text;
+        `;
+        document.querySelector('.more-info').innerHTML = moreInfo; // Mettre à jour le contenu
+        document.querySelector('.more-info').style.display = 'block'; // Afficher les informations supplémentaires
+        document.getElementById('see-more').style.display = 'none'; // Masquer le bouton après clic
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    };
+
+    // Ajouter l'écouteur d'événements pour le bouton "Voir les commandes critiques"
+    document.getElementById('see-more-commands').onclick = () => {
+        const criticalCommands = `
+            write erase<br>
+            reload;
+        `;
+        document.querySelector('.critical-commands').innerHTML = criticalCommands; // Mettre à jour le contenu des commandes critiques
+        document.querySelector('.critical-commands').style.display = 'block'; // Afficher les commandes critiques
+        document.getElementById('see-more-commands').style.display = 'none'; // Masquer le bouton après clic
+        chatbox.scrollTop = chatbox.scrollHeight; // Faire défiler vers le bas
+    };
+
+    // Gestion de l'ouverture et de la fermeture du menu
+    const menuButton = document.getElementById('menu-button');
+    const sidebar = document.getElementById('sidebar');
+
+    menuButton.onclick = () => {
+        sidebar.classList.toggle('open'); // Basculer l'état ouvert/fermé de la sidebar
+        const creatorInfo = document.getElementById('creator-info');
+        creatorInfo.style.display = sidebar.classList.contains('open') ? 'block' : 'none'; // Afficher ou masquer les infos
+        
+    };
+
+    // Ajouter l'écouteur d'événements pour le bouton "Informations"
+    document.getElementById('info-button').onclick = () => {
+        const creatorInfo = document.getElementById('creator-info');
+        creatorInfo.style.display = creatorInfo.style.display === 'none' ? 'block' : 'none'; // Afficher ou masquer les infos
+    };
+
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', (event) => {
+        const menuButton = document.getElementById('menu-button');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (!menuButton.contains(event.target) && !sidebar.contains(event.target)) {
+            sidebar.classList.remove('open'); // Fermer le menu
+        }
+    });
+
+
+</script>
+</body>
+</html>

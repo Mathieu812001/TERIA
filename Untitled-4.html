@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot IA Intelligent</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            background-color: #fff;
+            width: 400px;
+            height: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .chat-box p {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .user-msg {
+            background-color: #d1f7c4;
+            align-self: flex-end;
+        }
+        .bot-msg {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        .input-container {
+            display: flex;
+        }
+        .input-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        .input-container button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <p class="bot-msg">Bonjour, comment puis-je vous aider ?</p>
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Tapez votre message..." />
+            <button onclick="sendMessage()">Envoyer</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+
+            // Afficher le message de l'utilisateur
+            const chatBox = document.getElementById('chat-box');
+            const userMessage = document.createElement('p');
+            userMessage.classList.add('user-msg');
+            userMessage.textContent = userInput;
+            chatBox.appendChild(userMessage);
+
+            // Envoyer la requête au serveur Node.js
+            const response = await fetch('http://localhost:3000/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userInput })
+            });
+            const data = await response.json();
+
+            // Réponse du bot
+            const botMessage = document.createElement('p');
+            botMessage.classList.add('bot-msg');
+            botMessage.textContent = data.reply;
+            chatBox.appendChild(botMessage);
+
+            // Faire défiler le chat vers le bas
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Réinitialiser le champ de texte
+            document.getElementById('user-input').value = '';
+        }
+    </script>
+</body>
+</html>

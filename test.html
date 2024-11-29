@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERIA - Page de Connexion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bienvenue sur TERIA</h1>
+            <button id="menu-button" class="menu-btn">
+                <div></div>
+                <div></div>
+                <div></div>
+                <span id="menu-label">Menu</span>
+            </button>
+        </header>
+
+        <aside id="sidebar" class="sidebar">
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </aside>
+
+        <main id="content" class="content">
+            <div class="login-container">
+                <h2>Connexion</h2>
+                <form id="login-form">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                    <button type="submit">Se connecter</button>
+                </form>
+                <p><a href="#">Mot de passe oublié ?</a></p>
+            </div>
+
+            <div id="deconnexion" class="deconnexion">
+                <button>Déconnexion</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 TERIA - Tous droits réservés</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription et Connexion</title>
+    <style>
+        #welcome-message {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+        #login-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Formulaire d'inscription -->
+    <form id="signup-form" action="register.php" method="post">
+        <h3>Inscription</h3>
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="mot_de_passe">Mot de passe :</label>
+        <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required>
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required>
+
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <!-- Formulaire de connexion -->
+    <form id="login-form" action="javascript:void(0);">
+        <h3>Connexion</h3>
+        <label for="login-email">Email :</label>
+        <input type="email" id="login-email" name="login-email" required>
+
+        <label for="login-password">Mot de passe :</label>
+        <input type="password" id="login-password" name="login-password" required>
+
+        <button type="submit" onclick="login()">Se connecter</button>
+    </form>
+
+    <div id="welcome-message"></div>
+
+    <button id="toggle-form" onclick="toggleForms()">Passer à la connexion</button>
+
+    <script>
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            fetch('utilisateurs.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const users = data.split('\n').filter(line => line).map(line => {
+                        const [email, mot_de_passe, nom, prenom] = line.split(',');
+                        return { email, mot_de_passe, nom, prenom };
+                    });
+
+                    const user = users.find(user => user.email === email && user.mot_de_passe === password);
+                    if (user) {
+                        document.getElementById('welcome-message').innerText = `Bienvenue, ${user.prenom} ${user.nom}!`;
+                        document.getElementById('welcome-message').style.display = 'block';
+                        document.getElementById('login-form').reset();
+                        document.getElementById('signup-form').style.display = 'none';
+                        document.getElementById('login-form').style.display = 'none';
+                    } else {
+                        alert('Email ou mot de passe incorrect.');
+                    }
+                });
+        }
+
+        function toggleForms() {
+            const signupForm = document.getElementById('signup-form');
+            const loginForm = document.getElementById('login-form');
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+                document.getElementById('toggle-form').innerText = 'Passer à la connexion';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                document.getElementById('toggle-form').innerText = 'Passer à l\'inscription';
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Zone de Texte</title>
+    <script>
+        function validateForm() {
+            const questionField = document.getElementById("question");
+            if (questionField.value.trim() === "") {
+                alert("La zone de texte 'question' ne peut pas être vide.");
+                questionField.focus();
+                return false; // Empêche la soumission
+            }
+            return true; // Autorise la soumission
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateForm();">
+        <label for="question">Votre question :</label>
+        <textarea id="question" name="question" rows="4" cols="50"></textarea>
+        <br><br>
+        <button type="submit">Soumettre</button>
+    </form>
+</body>
+</html>

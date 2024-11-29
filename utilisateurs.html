@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Utilisateurs</title>
+</head>
+<body>
+    <h3>Liste des Utilisateurs Inscrits</h3>
+    <table border="1">
+        <tr>
+            <th>Email</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+        </tr>
+        <tbody id="user-list"></tbody>
+    </table>
+
+    <script>
+        // Chargement des utilisateurs à partir du stockage local
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const userList = document.getElementById('user-list');
+
+        // Affichage des utilisateurs dans le tableau
+        users.forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${user.email}</td>
+                <td>${user.nom}</td>
+                <td>${user.prenom}</td>
+            `;
+            userList.appendChild(row);
+        });
+    </script>
+</body>
+</html>
